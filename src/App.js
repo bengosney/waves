@@ -11,11 +11,10 @@ class App extends Component {
 	    pixelSize: 8,
 	    height: 500,
 	    width: 150,
-	    mouseX: 0,
-	    mouseY: 0,
+	    mouseX: -9999,
+	    mouseY: -9999,
 	    effectMod: 2,
-	    strengthMod: 15,
-	    openSimplex: new OpenSimplexNoise(Date.now())
+	    strengthMod: 15
 	};
 	
 	this.drawing = false;
@@ -48,7 +47,7 @@ class App extends Component {
 	const { innerWidth, innerHeight } = window;
 	const { width, height } = rect;
 	
-	this.setState({ width: width, height: height });
+	this.setState({ width: Math.min(width, innerWidth), height: Math.min(height, innerHeight) });
     }
     
     componentWillUnmount() {
@@ -101,6 +100,13 @@ class App extends Component {
 	return {x: x + a.x, y: y + a.y};
     }
 
+    distance(x1, y1, x2, y2) {
+	const x = x1 - x2;
+	const y = y1 - y2;
+	
+	return Math.sqrt( x * x + y * y);
+    };
+
     drawDots() {
 	const gap = 25;
 	const r = 3;
@@ -108,18 +114,11 @@ class App extends Component {
 	const effect = Math.min(width, height) * effectMod;
 	const { ctx } = this;
 
-	const distance = (x1, y1, x2, y2) => {
-	    const x = x1 - x2;
-	    const y = y1 - y2;
-
-	    return Math.sqrt( x * x + y * y);
-	};
-
 	for (let x = 0 ; x < width ; x += gap) {
 	    for (let y = 0 ; y < height ; y += gap) {
-		const dist = distance(x, y, mouseX, mouseY);
+		const dist = this.distance(x, y, mouseX, mouseY);
 
-		const mod = Math.max(0, (effect - dist) / (strengthMod * (width / 300)));
+		const mod = Math.max(0, (effect - dist) / (strengthMod * (width / 500)));
 		const pos = this.move(x, y, mod, mouseX, mouseY, x, y);
 		
 		ctx.beginPath();
@@ -132,8 +131,6 @@ class App extends Component {
     
     render() {
 	const { width, height, openSimplex, effectMod, strengthMod } = this.state;
-
-	const val = openSimplex.noise2D(1, 1) + 1;
         
         return (
 	    <div className={ 'grid' }>
