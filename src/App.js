@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import OpenSimplexNoise from 'open-simplex-noise';
-
 
 class App extends Component {
     constructor(props) {
 	super(props);
 
 	this.state = {
-	    pixelSize: 8,
+	    pixelSize: 1.5,
 	    height: 500,
 	    width: 150,
 	    mouseX: -9999,
 	    mouseY: -9999,
+	    mouseEvent: 0,
 	    effectMod: 2,
-	    strengthMod: 15
+	    strength: 40,
+	    strengthCur: 0,
+	    mouseOver: false,
+	    gap: 14,
+	    r: 255,
+	    g: 255,
+	    b: 255,
+	    a: .8
 	};
 	
 	this.drawing = false;
@@ -35,6 +41,14 @@ class App extends Component {
 		mouseX: e.clientX,
 		mouseY: e.clientY
 	    });
+	});
+
+	canvas.addEventListener('mouseover', () => {
+	    this.setState({mouseOver: true, mouseEvent: this.getTS()});
+	});
+	
+	canvas.addEventListener('mouseleave', () => {
+	    this.setState({mouseOver: false, mouseEvent: this.getTS()});
 	});
 
 	this.rAF = requestAnimationFrame(() => this.updateAnimationState());
@@ -72,8 +86,7 @@ class App extends Component {
 	const { width, height } = this.state;
 	const { ctx } = this;
 
-	ctx.fillStyle = "#000000";
-	ctx.fillRect(0, 0, width, height);
+	ctx.clearRect(0, 0, width, height);
     }
     
     getTS() {
@@ -108,29 +121,37 @@ class App extends Component {
     };
 
     drawDots() {
-	const gap = 25;
-	const r = 3;
-	const { width, height, mouseX, mouseY, effectMod, strengthMod } = this.state;
+	const { width, height, mouseX, mouseY, mouseEvent, mouseOver, effectMod, strength, pixelSize, gap } = this.state;
+	const { r, g, b, a } = this.state;
 	const effect = Math.min(width, height) * effectMod;
 	const { ctx } = this;
+
+	let curStrength = strength;
+	const timeMod = (this.getTS() - mouseEvent) / 3;
+	
+	if (mouseOver) {
+	    curStrength = Math.min(strength, timeMod);
+	} else {
+	    curStrength = Math.max(0, (strength - timeMod));
+	}
 
 	for (let x = 0 ; x < width ; x += gap) {
 	    for (let y = 0 ; y < height ; y += gap) {
 		const dist = this.distance(x, y, mouseX, mouseY);
 
-		const mod = Math.max(0, (effect - dist) / (strengthMod * (width / 500)));
+		const mod = Math.max(0, curStrength);
 		const pos = this.move(x, y, mod, mouseX, mouseY, x, y);
 		
 		ctx.beginPath();
-		ctx.fillStyle = "#ffffff";
-		ctx.arc(pos.x, pos.y, r, 0, 2 * Math.PI);
-		ctx.fill();
+		ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
+		ctx.fillRect(pos.x, pos.y, pixelSize, pixelSize);
 	    }
 	}
     }
     
     render() {
-	const { width, height, openSimplex, effectMod, strengthMod } = this.state;
+	const { width, height, effectMod, strength, pixelSize, gap } = this.state;
+	const { r, g, b, a } = this.state;
         
         return (
 	    <div className={ 'grid' }>
@@ -140,12 +161,29 @@ class App extends Component {
 	      <div className={ 'controls' }>
 		<h2>Controls</h2>
 		<div>
-		  <label htmlFor={ 'area' }>Area Mod</label><br />
+		  <label htmlFor={ 'area' }>Area Effected</label><br />
 		  <input name={ 'area' } value={ effectMod } onChange={ e => this.setState({ effectMod: e.target.value }) } />
 		</div>
 		<div>
-		  <label htmlFor={ 'strength' }>Strength Mod</label><br />
-		  <input name={ 'strength' } value={ strengthMod } onChange={ e => this.setState({ strengthMod: e.target.value }) } />
+		  <label htmlFor={ 'strength' }>Strength</label><br />
+		  <input name={ 'strength' } value={ strength } onChange={ e => this.setState({ strength: e.target.value }) } />
+		</div>
+		<div>
+		  <label htmlFor={ 'size' }>Dot Size</label><br />
+		  <input name={ 'size' } value={ pixelSize } onChange={ e => this.setState({ pixelSize: e.target.value }) } />
+		</div>
+		<div>
+		  <label htmlFor={ 'gap' }>Gap Size</label><br />
+		  <input name={ 'gap' } value={ gap } onChange={ e => this.setState({ gap: e.target.value }) } />
+		</div>
+		<div>
+		  <label>Colour</label><br />
+		  <div className={ 'row' } >
+		    <input className={ 'small' } value={ r } onChange={ e => this.setState({ r: e.target.value }) } />
+                    <input className={ 'small' } value={ g } onChange={ e => this.setState({ g: e.target.value }) } />
+		    <input className={ 'small' } value={ b } onChange={ e => this.setState({ b: e.target.value }) } />
+		    <input className={ 'small' } value={ a } onChange={ e => this.setState({ a: e.target.value }) } />
+		  </div>
 		</div>
 	      </div>
             </div>
