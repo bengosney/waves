@@ -1,0 +1,13 @@
+{
+  "main.css": "/waves/static/css/main.130c5921.chunk.css",
+  "main.js": "/waves/static/js/main.6fe8d183.chunk.js",
+  "main.js.map": "/waves/static/js/main.6fe8d183.chunk.js.map",
+  "runtime~main.js": "/waves/static/js/runtime~main.6897492d.js",
+  "runtime~main.js.map": "/waves/static/js/runtime~main.6897492d.js.map",
+  "static/js/2.67b98335.chunk.js": "/waves/static/js/2.67b98335.chunk.js",
+  "static/js/2.67b98335.chunk.js.map": "/waves/static/js/2.67b98335.chunk.js.map",
+  "index.html": "/waves/index.html",
+  "precache-manifest.4a73228b7a3684fda566b4228d4ead12.js": "/waves/precache-manifest.4a73228b7a3684fda566b4228d4ead12.js",
+  "service-worker.js": "/waves/service-worker.js",
+  "static/css/main.130c5921.chunk.css.map": "/waves/static/css/main.130c5921.chunk.css.map"
+}
