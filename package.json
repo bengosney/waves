@@ -1,8 +1,8 @@
 {
-  "name": "dots",
+  "name": "waves",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://bengosney.github.io/dots/",
+  "homepage": "https://bengosney.github.io/waves/",
   "dependencies": {
     "open-simplex-noise": "^1.6.0",
     "react": "^16.8.4",

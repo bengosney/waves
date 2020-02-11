@@ -1,3 +1,3 @@
-# Dot
+# waves
 
-[https://bengosney.github.io/dots/](https://bengosney.github.io/dots/)
+[https://bengosney.github.io/waves/](https://bengosney.github.io/waves/)
