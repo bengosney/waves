@@ -1,5 +1,5 @@
 {
-  "main.css": "/waves/static/css/main.b8024b26.chunk.css",
+  "main.css": "/waves/static/css/main.ae4e72d8.chunk.css",
   "main.js": "/waves/static/js/main.51bc08db.chunk.js",
   "main.js.map": "/waves/static/js/main.51bc08db.chunk.js.map",
   "runtime~main.js": "/waves/static/js/runtime~main.6897492d.js",
@@ -7,7 +7,7 @@
   "static/js/2.67b98335.chunk.js": "/waves/static/js/2.67b98335.chunk.js",
   "static/js/2.67b98335.chunk.js.map": "/waves/static/js/2.67b98335.chunk.js.map",
   "index.html": "/waves/index.html",
-  "precache-manifest.1c2e52a2df7e1951dff7217228058053.js": "/waves/precache-manifest.1c2e52a2df7e1951dff7217228058053.js",
+  "precache-manifest.aed7a18f13a1cd1547ed5fd14ec4d413.js": "/waves/precache-manifest.aed7a18f13a1cd1547ed5fd14ec4d413.js",
   "service-worker.js": "/waves/service-worker.js",
-  "static/css/main.b8024b26.chunk.css.map": "/waves/static/css/main.b8024b26.chunk.css.map"
+  "static/css/main.ae4e72d8.chunk.css.map": "/waves/static/css/main.ae4e72d8.chunk.css.map"
 }
